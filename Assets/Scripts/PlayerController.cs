@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour {
 
 		//Horizontal forces
 
-		rigidbody.AddForce (movement * speed * Time.deltaTime);
+		rigidbody.AddForce (movement * speed * Time.deltaTime, ForceMode.VelocityChange);
 
 //		rigidbody.velocity = skis.transform.forward * Mathf.sqrt(rigidbody.velocity.x*rigidbody.velocity.x
 //		                                                   +rigidbody.velocity.z*rigidbody.velocity.z);
