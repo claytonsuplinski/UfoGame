@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 7e1336ce802947c47b302000a9855263
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - countText: {instanceID: 0}
+  - scoreText: {instanceID: 0}
+  - winText: {instanceID: 0}
+  - coinSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
