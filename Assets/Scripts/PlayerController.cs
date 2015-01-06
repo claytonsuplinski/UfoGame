@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour {
 	
 	public float speed;
 	public GUIText countText;
-	public GUIText winText;
+	public GUIText timerText;
+	public GameObject gameOverText;
 	public AudioClip coinSound;
 	public GameObject skis;
 	public GameObject bronzeMedal;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	private List<GameObject> collectedCoins = new List<GameObject>();
 	private bool aPressed;
 	private float ufoMaxHeight = 200;
+	private float timeLeft = 60;
 
 	private GameObject scienceFestDemo;
 	private GameObject holidayDemo;
@@ -25,7 +27,6 @@ public class PlayerController : MonoBehaviour {
 		count = 0;
 		aPressed = false;
 		SetCountText ();
-		winText.text = "";
 		numPickups = GameObject.FindGameObjectsWithTag("Pickup").Length;
 		
 		goldMedal.SetActive(false);
@@ -62,6 +63,14 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKey ("a")) {
 			aPressed = true;
 		}
+
+		if (timeLeft > 0) {
+			timeLeft -= Time.deltaTime;
+		}
+		if ( timeLeft <= 0 ){
+			GameOver();
+		}
+		UpdateTimerText ();
 	}
 
 	void FixedUpdate(){
@@ -140,6 +149,19 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void SetCountText(){
-		countText.text = "Count: " + count.ToString ();
+		countText.text = count.ToString ();
+	}
+
+	void UpdateTimerText(){
+		if (timeLeft >= 10 || timeLeft == 0) {
+			timerText.text = timeLeft.ToString ("F0");
+		} else{
+			timerText.text = timeLeft.ToString ("F1");
+		}
+	}
+
+	void GameOver(){
+		timeLeft = 0;
+		gameOverText.SetActive(true);
 	}
 }
