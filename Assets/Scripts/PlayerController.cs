@@ -7,12 +7,10 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public GUIText countText;
 	public GUIText timerText;
+	public GameObject mainMenuText;
 	public GameObject gameOverText;
 	public AudioClip coinSound;
 	public GameObject skis;
-	public GameObject bronzeMedal;
-	public GameObject silverMedal;
-	public GameObject goldMedal;
 	private int count;
 	private int numPickups;
 	private List<GameObject> collectedCoins = new List<GameObject>();
@@ -23,15 +21,15 @@ public class PlayerController : MonoBehaviour {
 	private GameObject scienceFestDemo;
 	private GameObject holidayDemo;
 
+	private Vector3 startingPosition = new Vector3(0,50,0);
+
 	void Start(){
 		count = 0;
 		aPressed = false;
 		SetCountText ();
 		numPickups = GameObject.FindGameObjectsWithTag("Pickup").Length;
-		
-		goldMedal.SetActive(false);
-		silverMedal.SetActive(false);
-		bronzeMedal.SetActive(false);
+
+		rigidbody.transform.position = startingPosition;
 		
 		scienceFestDemo = GameObject.Find("ScienceFestDemo");
 		holidayDemo = GameObject.Find("HolidayDemo");
@@ -39,6 +37,12 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update(){
+		if (mainMenuText.activeSelf) {
+			timeLeft = 60;
+			rigidbody.transform.position = startingPosition;
+			mainMenuText.SetActive(false);
+		}
+
 		if (Input.GetKeyDown ("r")) {
 			//Application.LoadLevel ("MiniGame");
 			this.transform.position = new Vector3 (0,0,0);
@@ -51,9 +55,6 @@ public class PlayerController : MonoBehaviour {
 			}
 			
 			count = 0;
-			goldMedal.SetActive(false);
-			silverMedal.SetActive(false);
-			bronzeMedal.SetActive(false);
 			
 			SetCountText ();
 			collectedCoins.Clear();
@@ -118,6 +119,8 @@ public class PlayerController : MonoBehaviour {
 			                                           rigidbody.transform.position.z);
 
 		}
+
+
 	}
 
 	void OnTriggerEnter(Collider other){
