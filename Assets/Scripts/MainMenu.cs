@@ -5,13 +5,26 @@ public class MainMenu : MonoBehaviour {
 
 	public GameObject mainMenu;
 	public GameObject theGame;
+	public GUITexture startButton;
+	public GUITexture helpButton;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
 	
-	void OnGUI () {
-		if (GUI.Button (new Rect (512, 512, 100, 30), "Start")) {
-			// This code is executed when the Button is clicked
-			//mainMenu.SetActive(false);
+	// Update is called once per frame
+	void Update () {
+		if (startButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
+			mainMenu.SetActive(false);
 			theGame.SetActive(true);
 		}
+
+		/*
+		if (helpButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
+			helpScreen.SetActive(true);
+		}
+*/
 	}
 	
 }

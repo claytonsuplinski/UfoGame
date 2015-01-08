@@ -10,11 +10,14 @@ public class PlayerController : MonoBehaviour {
 	public GameObject mainMenuText;
 	public GameObject gameOverText;
 	public AudioClip coinSound;
+	public AudioClip gameOverSound;
 	public GameObject skis;
 	private int count;
 	private int numPickups;
 	private List<GameObject> collectedCoins = new List<GameObject>();
 	private bool aPressed;
+	private bool qPressed;
+	private bool gameOverSoundPlayed = false;
 	private float ufoMaxHeight = 200;
 	private float timeLeft = 60;
 
@@ -37,33 +40,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update(){
-		if (mainMenuText.activeSelf) {
-			timeLeft = 60;
-			rigidbody.transform.position = startingPosition;
-			mainMenuText.SetActive(false);
-		}
-
-		if (Input.GetKeyDown ("r")) {
-			//Application.LoadLevel ("MiniGame");
-			this.transform.position = new Vector3 (0,0,0);
-			rigidbody.velocity = Vector3.zero;
-			rigidbody.angularVelocity = Vector3.zero;
-
-			for(int i=0; i<count; i++){
-				GameObject tmpPickup = collectedCoins[i] as GameObject;
-				tmpPickup.SetActive(true);
-			}
-			
-			count = 0;
-			
-			SetCountText ();
-			collectedCoins.Clear();
-		} 
 
 		aPressed = false;
 		if (Input.GetKey ("a")) {
 			aPressed = true;
 		}
+		qPressed = false;
+		if (Input.GetKey ("q")) {
+			qPressed = true;
+		}		
 
 		if (timeLeft > 0) {
 			timeLeft -= Time.deltaTime;
@@ -88,7 +73,10 @@ public class PlayerController : MonoBehaviour {
 
 		float forwardMag = 0;
 		if (Input.GetKey ("w")) {
-			forwardMag = 1;
+			forwardMag = 2;
+		}
+		else if (Input.GetKey ("s")) {
+			forwardMag = -2;
 		}
 
 		Vector3 movement = new Vector3(1,0,1);
@@ -108,7 +96,12 @@ public class PlayerController : MonoBehaviour {
 //		                                                   +rigidbody.velocity.z*rigidbody.velocity.z);
 
 		//Vertical forces
-		if (aPressed && rigidbody.transform.position.y < ufoMaxHeight) {
+		if (aPressed) {
+			rigidbody.AddForce (new Vector3(0, -50, 0));
+			
+		}
+
+		if (qPressed && rigidbody.transform.position.y < ufoMaxHeight) {
 			rigidbody.AddForce (new Vector3(0, 50, 0));
 			
 		}
@@ -166,5 +159,9 @@ public class PlayerController : MonoBehaviour {
 	void GameOver(){
 		timeLeft = 0;
 		gameOverText.SetActive(true);
+		if (!gameOverSoundPlayed) {
+			AudioSource.PlayClipAtPoint (gameOverSound, transform.position);
+			gameOverSoundPlayed = true;
+		}
 	}
 }

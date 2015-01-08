@@ -15,8 +15,7 @@ public class ResetButton : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (resetButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
-			ufoGame.SetActive(false);
-			startingScreen.SetActive(true);
+			Application.LoadLevel ("MiniGame");
 		}
 	}
 }
