@@ -9,9 +9,13 @@ public class PlayerController : MonoBehaviour {
 	public GUIText timerText;
 	public GameObject mainMenuText;
 	public GameObject gameOverText;
+	public GameObject ufoGame;
+	public GameObject endUfoGame;
 	public AudioClip coinSound;
 	public AudioClip gameOverSound;
-	public GameObject skis;
+	public GameObject ufo;
+	public GameObject tractorBeam;
+	public GameObject ufoLight;
 	private int count;
 	private int numPickups;
 	private List<GameObject> collectedCoins = new List<GameObject>();
@@ -19,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 	private bool qPressed;
 	private bool gameOverSoundPlayed = false;
 	private float ufoMaxHeight = 200;
-	private float timeLeft = 60;
+	private float timeLeft = 6;
 
 	private GameObject scienceFestDemo;
 	private GameObject holidayDemo;
@@ -40,80 +44,81 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update(){
+	  if (!gameOverSoundPlayed) {
+			aPressed = false;
+			if (Input.GetKey ("a")) {
+					aPressed = true;
+			}
+			qPressed = false;
+			if (Input.GetKey ("q")) {
+					qPressed = true;
+			}		
 
-		aPressed = false;
-		if (Input.GetKey ("a")) {
-			aPressed = true;
-		}
-		qPressed = false;
-		if (Input.GetKey ("q")) {
-			qPressed = true;
-		}		
-
-		if (timeLeft > 0) {
-			timeLeft -= Time.deltaTime;
-		}
-		if ( timeLeft <= 0 ){
-			GameOver();
-		}
-		UpdateTimerText ();
+			if (timeLeft > 0) {
+					timeLeft -= Time.deltaTime;
+			}
+			if (timeLeft <= 0) {
+					GameOver ();
+			}
+			UpdateTimerText ();
+	  }
 	}
 
 	void FixedUpdate(){
-		float moveHorizontal = 0;
-		if (Input.GetKey (KeyCode.RightArrow)) {
-			moveHorizontal++;
-		}
-		if (Input.GetKey (KeyCode.LeftArrow)) {
-			moveHorizontal--;
-		}
-		if (Input.GetKey (KeyCode.DownArrow)) {
-			rigidbody.velocity = rigidbody.velocity/1.2f;
-		}
+	  if (!gameOverSoundPlayed) {
+			float moveHorizontal = 0;
+			if (Input.GetKey (KeyCode.RightArrow)) {
+					moveHorizontal++;
+			}
+			if (Input.GetKey (KeyCode.LeftArrow)) {
+					moveHorizontal--;
+			}
+			if (Input.GetKey (KeyCode.DownArrow)) {
+					rigidbody.velocity = rigidbody.velocity / 1.2f;
+			}
 
-		float forwardMag = 0;
-		if (Input.GetKey ("w")) {
-			forwardMag = 2;
-		}
-		else if (Input.GetKey ("s")) {
-			forwardMag = -2;
-		}
+			float forwardMag = 0;
+			if (Input.GetKey ("w")) {
+					forwardMag = 2;
+			} else if (Input.GetKey ("s")) {
+					forwardMag = -2;
+			}
 
-		Vector3 movement = new Vector3(1,0,1);
-		movement = forwardMag*skis.transform.forward;
-		transform.Rotate(transform.up, moveHorizontal);
+			Vector3 movement = new Vector3 (1, 0, 1);
+			movement = forwardMag * ufo.transform.forward;
+			transform.Rotate (transform.up, moveHorizontal);
 
-		skis.transform.Rotate(skis.transform.up, moveHorizontal);
+			ufo.transform.Rotate (ufo.transform.up, moveHorizontal);
 
-		this.audio.volume = (float)(rigidbody.velocity.magnitude / 90.0f) + 0.1f;
-		this.audio.pitch = (float)(rigidbody.velocity.magnitude / 30.0f)+ 1.0f;
+			this.audio.volume = (float)(rigidbody.velocity.magnitude / 90.0f) + 0.1f;
+			this.audio.pitch = (float)(rigidbody.velocity.magnitude / 30.0f) + 1.0f;
 
-		//Horizontal forces
+			//Horizontal forces
 
-		rigidbody.AddForce (movement * speed * Time.deltaTime, ForceMode.VelocityChange);
+			rigidbody.AddForce (movement * speed * Time.deltaTime, ForceMode.VelocityChange);
 
-//		rigidbody.velocity = skis.transform.forward * Mathf.sqrt(rigidbody.velocity.x*rigidbody.velocity.x
+//		rigidbody.velocity = ufo.transform.forward * Mathf.sqrt(rigidbody.velocity.x*rigidbody.velocity.x
 //		                                                   +rigidbody.velocity.z*rigidbody.velocity.z);
 
-		//Vertical forces
-		if (aPressed) {
-			rigidbody.AddForce (new Vector3(0, -50, 0));
-			
-		}
+			//Vertical forces
+			if (aPressed) {
+					rigidbody.AddForce (new Vector3 (0, -50, 0));
 
-		if (qPressed && rigidbody.transform.position.y < ufoMaxHeight) {
-			rigidbody.AddForce (new Vector3(0, 50, 0));
-			
-		}
+			}
 
-		if (rigidbody.transform.position.y > ufoMaxHeight) {
-			rigidbody.transform.position = new Vector3(rigidbody.transform.position.x, 
-			                                           ufoMaxHeight,
-			                                           rigidbody.transform.position.z);
+			if (qPressed && rigidbody.transform.position.y < ufoMaxHeight) {
+					rigidbody.AddForce (new Vector3 (0, 50, 0));
 
-		}
+			}
 
+			if (rigidbody.transform.position.y > ufoMaxHeight) {
+					rigidbody.transform.position = new Vector3 (rigidbody.transform.position.x, 
+                                           ufoMaxHeight,
+                                           rigidbody.transform.position.z);
 
+			}
+
+	  }
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -158,10 +163,17 @@ public class PlayerController : MonoBehaviour {
 
 	void GameOver(){
 		timeLeft = 0;
-		gameOverText.SetActive(true);
+		transform.position = new Vector3 (0, 10, 0);
+		ufo.transform.rotation = Quaternion.identity;
 		if (!gameOverSoundPlayed) {
 			AudioSource.PlayClipAtPoint (gameOverSound, transform.position);
 			gameOverSoundPlayed = true;
+			gameOverText.SetActive(true);
+			ufoGame.SetActive(false);
+			ufo.renderer.enabled = false;
+			ufoLight.SetActive(false);
+			tractorBeam.SetActive(false);
+			endUfoGame.SetActive(true);
 		}
 	}
 }
