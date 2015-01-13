@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour {
 
 	public GameObject mainMenu;
 	public GameObject theGame;
+	public GameObject title;
 	public GUITexture startButton;
 	public GUITexture helpButton;
 
@@ -17,6 +18,7 @@ public class MainMenu : MonoBehaviour {
 	void Update () {
 		if (startButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
 			mainMenu.SetActive(false);
+			title.SetActive(false);
 			theGame.SetActive(true);
 		}
 

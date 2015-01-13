@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject ufo;
 	public GameObject tractorBeam;
 	public GameObject ufoLight;
+	public GameObject dummyCow;
 	private int count;
 	private int numPickups;
 	private List<GameObject> collectedCoins = new List<GameObject>();
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour {
 	private bool qPressed;
 	private bool gameOverSoundPlayed = false;
 	private float ufoMaxHeight = 200;
-	private float timeLeft = 6;
+	private float timeLeft = 120;
 
 	private GameObject scienceFestDemo;
 	private GameObject holidayDemo;
@@ -174,6 +175,18 @@ public class PlayerController : MonoBehaviour {
 			ufoLight.SetActive(false);
 			tractorBeam.SetActive(false);
 			endUfoGame.SetActive(true);
+			int i = 0;
+			while(i < count){
+				Vector3 tmpPos = new Vector3(5.0f*(i%20.0f), 0, -10.0f*Mathf.Floor(i/20.0f) + 15.0f);
+				if(i%2 == 0 && i%20 != 0){
+					tmpPos.x = -5.0f*((i-1)%20.0f);
+				}
+				float tmpHeight = Terrain.activeTerrain.SampleHeight(tmpPos)
+					+ Terrain.activeTerrain.transform.position.y;
+				tmpPos.y = tmpHeight;
+				Instantiate(dummyCow, tmpPos, Quaternion.Euler(new Vector3(0,180,0)));
+				i++;
+			}
 		}
 	}
 }
