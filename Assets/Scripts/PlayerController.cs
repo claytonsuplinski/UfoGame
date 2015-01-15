@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour {
 		
 		scienceFestDemo = GameObject.Find("ScienceFestDemo");
 		holidayDemo = GameObject.Find("HolidayDemo");
+
+		genRandomCows ();
 		//holidayDemo.active = false;
 	}
 
@@ -159,6 +161,19 @@ public class PlayerController : MonoBehaviour {
 			timerText.text = timeLeft.ToString ("F0");
 		} else{
 			timerText.text = timeLeft.ToString ("F1");
+		}
+	}
+
+	void genRandomCows(){
+		GameObject tmpCow = GameObject.FindGameObjectsWithTag("Pickup")[0];
+		int i = 0;
+		while(i < 500){
+			Vector3 tmpPos = new Vector3(Random.Range(-3500f, 3500f), 0, Random.Range(-3500f, 3500f));
+			float tmpHeight = Terrain.activeTerrain.SampleHeight(tmpPos)
+				+ Terrain.activeTerrain.transform.position.y;
+			tmpPos.y = tmpHeight;
+			Instantiate(tmpCow, tmpPos, Quaternion.Euler(new Vector3(0,Random.Range(0f, 360f),0)));
+			i++;
 		}
 	}
 
