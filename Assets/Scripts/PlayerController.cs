@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject tractorBeam;
 	public GameObject ufoLight;
 	public GameObject dummyCow;
+	public GameObject explosion;
 	private int count;
 	private int numPickups;
 	private List<GameObject> collectedCoins = new List<GameObject>();
@@ -47,13 +48,13 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update(){
-	  if (!gameOverSoundPlayed) {
+	  if (!gameOverSoundPlayed && !exploding) {
 			aPressed = false;
-			if (Input.GetKey ("a")) {
+			if (Input.GetKey (KeyCode.DownArrow)) {
 					aPressed = true;
 			}
 			qPressed = false;
-			if (Input.GetKey ("q")) {
+			if (Input.GetKey (KeyCode.UpArrow)) {
 					qPressed = true;
 			}		
 
@@ -67,16 +68,36 @@ public class PlayerController : MonoBehaviour {
 	  }
 	}
 
+	private int explosionCounter = 0;
+	private bool exploding = false;
+	void UfoExplode(){
+		explosionCounter++;
+		if (explosionCounter > 100) {
+			GameOver ();
+				}
+	}
+
+	void OnCollisionStay(Collision collisionInfo) {
+		if (!exploding) {
+						explosion.SetActive (true);
+						UfoExplode ();
+						exploding = true;
+				}
+	}
+
 	void FixedUpdate(){
-	  if (!gameOverSoundPlayed) {
+		if (exploding) {
+			UfoExplode();
+				}
+	  if (!gameOverSoundPlayed && !exploding) {
 			float moveHorizontal = 0;
-			if (Input.GetKey (KeyCode.RightArrow)) {
+			if (Input.GetKey ("d")) {
 					moveHorizontal++;
 			}
-			if (Input.GetKey (KeyCode.LeftArrow)) {
+			if (Input.GetKey ("a")) {
 					moveHorizontal--;
 			}
-			if (Input.GetKey (KeyCode.DownArrow)) {
+			if (Input.GetKey (KeyCode.Space)) {
 					rigidbody.velocity = rigidbody.velocity / 1.2f;
 			}
 
@@ -187,6 +208,7 @@ public class PlayerController : MonoBehaviour {
 			gameOverText.SetActive(true);
 			ufoGame.SetActive(false);
 			ufo.renderer.enabled = false;
+			explosion.SetActive(false);
 			ufoLight.SetActive(false);
 			tractorBeam.SetActive(false);
 			endUfoGame.SetActive(true);

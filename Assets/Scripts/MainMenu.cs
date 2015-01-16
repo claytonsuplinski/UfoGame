@@ -8,7 +8,8 @@ public class MainMenu : MonoBehaviour {
 	public GameObject title;
 	public GUITexture startButton;
 	public GUITexture helpButton;
-
+	public GUITexture helpText;
+		
 	// Use this for initialization
 	void Start () {
 		
@@ -22,11 +23,14 @@ public class MainMenu : MonoBehaviour {
 			theGame.SetActive(true);
 		}
 
-		/*
+
 		if (helpButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
-			helpScreen.SetActive(true);
+			helpText.gameObject.SetActive(true);
+			startButton.gameObject.SetActive(false);
+			helpButton.gameObject.SetActive(false);
+			title.SetActive(false);
 		}
-*/
+
 	}
 	
 }
