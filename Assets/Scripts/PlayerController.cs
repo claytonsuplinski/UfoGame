@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 startingPosition = new Vector3(0,50,0);
 
 	void Start(){
+		Screen.fullScreen = false; 
 		count = 0;
 		aPressed = false;
 		SetCountText ();

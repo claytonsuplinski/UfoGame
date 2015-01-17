@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour {
 	public GUITexture startButton;
 	public GUITexture helpButton;
 	public GUITexture helpText;
+	public GameObject mainMenuOrtho;
 		
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,7 @@ public class MainMenu : MonoBehaviour {
 		if (startButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
 			mainMenu.SetActive(false);
 			title.SetActive(false);
+			mainMenuOrtho.SetActive(false);
 			theGame.SetActive(true);
 		}
 
