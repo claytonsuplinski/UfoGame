@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour {
 	public AudioClip coinSound;
 	public AudioClip gameOverSound;
 	public GameObject ufo;
+	public GameObject ufoModel;
+	public GameObject ufoChunks;
 	public GameObject tractorBeam;
 	public GameObject ufoLight;
 	public GameObject dummyCow;
@@ -72,6 +74,10 @@ public class PlayerController : MonoBehaviour {
 	private int explosionCounter = 0;
 	private bool exploding = false;
 	void UfoExplode(){
+		if (explosionCounter == 0) {
+			ufoModel.SetActive (false);
+			ufoChunks.SetActive(true);
+		}
 		explosionCounter++;
 		if (explosionCounter > 100) {
 			GameOver ();
@@ -201,27 +207,26 @@ public class PlayerController : MonoBehaviour {
 
 	void GameOver(){
 		timeLeft = 0;
-		transform.position = new Vector3 (0, 10, 0);
+		transform.position = new Vector3 (0, 510, 0);
 		ufo.transform.rotation = Quaternion.identity;
 		if (!gameOverSoundPlayed) {
 			AudioSource.PlayClipAtPoint (gameOverSound, transform.position);
 			gameOverSoundPlayed = true;
 			gameOverText.SetActive(true);
 			ufoGame.SetActive(false);
-			ufo.renderer.enabled = false;
+			//ufo.renderer.enabled = false;
+			ufoModel.SetActive(false);
+			ufoChunks.SetActive(false);
 			explosion.SetActive(false);
 			ufoLight.SetActive(false);
 			tractorBeam.SetActive(false);
 			endUfoGame.SetActive(true);
 			int i = 0;
 			while(i < count){
-				Vector3 tmpPos = new Vector3(5.0f*(i%20.0f), 0, -10.0f*Mathf.Floor(i/20.0f) + 15.0f);
+				Vector3 tmpPos = new Vector3(5.0f*(i%20.0f), 500, -10.0f*Mathf.Floor(i/20.0f) + 15.0f);
 				if(i%2 == 0 && i%20 != 0){
 					tmpPos.x = -5.0f*((i-1)%20.0f);
 				}
-				float tmpHeight = Terrain.activeTerrain.SampleHeight(tmpPos)
-					+ Terrain.activeTerrain.transform.position.y;
-				tmpPos.y = tmpHeight;
 				Instantiate(dummyCow, tmpPos, Quaternion.Euler(new Vector3(0,180,0)));
 				i++;
 			}

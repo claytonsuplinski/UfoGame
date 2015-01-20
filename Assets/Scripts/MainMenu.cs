@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour {
 	public GUITexture helpButton;
 	public GUITexture helpText;
 	public GameObject mainMenuOrtho;
+	public GameObject missionsButton;
+	public GameObject storeButton;
 		
 	// Use this for initialization
 	void Start () {
@@ -30,6 +32,8 @@ public class MainMenu : MonoBehaviour {
 			helpText.gameObject.SetActive(true);
 			startButton.gameObject.SetActive(false);
 			helpButton.gameObject.SetActive(false);
+			missionsButton.SetActive(false);
+			storeButton.SetActive(false);
 			title.SetActive(false);
 		}
 
