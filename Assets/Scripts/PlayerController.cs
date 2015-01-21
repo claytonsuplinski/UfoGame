@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 	private bool gameOverSoundPlayed = false;
 	private float ufoMaxHeight = 200;
 	private float timeLeft = 120;
+	private int numCows = 200;
 
 	private GameObject scienceFestDemo;
 	private GameObject holidayDemo;
@@ -195,8 +196,8 @@ public class PlayerController : MonoBehaviour {
 	void genRandomCows(){
 		GameObject tmpCow = GameObject.FindGameObjectsWithTag("Pickup")[0];
 		int i = 0;
-		while(i < 500){
-			Vector3 tmpPos = new Vector3(Random.Range(-3500f, 3500f), 0, Random.Range(-3500f, 3500f));
+		while(i < numCows){
+			Vector3 tmpPos = new Vector3(Random.Range(-900f, 900f), 0, Random.Range(-900f, 900f));
 			float tmpHeight = Terrain.activeTerrain.SampleHeight(tmpPos)
 				+ Terrain.activeTerrain.transform.position.y;
 			tmpPos.y = tmpHeight;
@@ -222,11 +223,16 @@ public class PlayerController : MonoBehaviour {
 			tractorBeam.SetActive(false);
 			endUfoGame.SetActive(true);
 			int i = 0;
+			float tmpOffset = 0;
 			while(i < count){
-				Vector3 tmpPos = new Vector3(5.0f*(i%20.0f), 500, -10.0f*Mathf.Floor(i/20.0f) + 15.0f);
-				if(i%2 == 0 && i%20 != 0){
-					tmpPos.x = -5.0f*((i-1)%20.0f);
+				tmpOffset *= -1;
+				if(i%2 == 1){
+					tmpOffset += 5.0f;
 				}
+				else if(i%20 == 0){
+					tmpOffset = 0;
+				}
+				Vector3 tmpPos = new Vector3(tmpOffset, 500, -10.0f*Mathf.Floor(i/20.0f) + 15.0f);
 				Instantiate(dummyCow, tmpPos, Quaternion.Euler(new Vector3(0,180,0)));
 				i++;
 			}
