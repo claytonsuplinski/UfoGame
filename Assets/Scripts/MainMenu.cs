@@ -12,6 +12,12 @@ public class MainMenu : MonoBehaviour {
 	public GameObject mainMenuOrtho;
 	public GameObject missionsButton;
 	public GameObject storeButton;
+
+	public GUITexture wisconsinSelect;
+	public GUITexture texasSelect;
+
+	public GameObject wisconsin;
+	public GameObject texas;
 		
 	// Use this for initialization
 	void Start () {
@@ -21,10 +27,17 @@ public class MainMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (startButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
-			mainMenu.SetActive(false);
+			//mainMenu.SetActive(false);
 			title.SetActive(false);
-			mainMenuOrtho.SetActive(false);
-			theGame.SetActive(true);
+			startButton.gameObject.SetActive(false);
+			helpButton.gameObject.SetActive(false);
+			missionsButton.SetActive(false);
+			storeButton.SetActive(false);
+			wisconsinSelect.gameObject.SetActive(true);
+			texasSelect.gameObject.SetActive(true);
+
+			//mainMenuOrtho.SetActive(false);
+			//theGame.SetActive(true);
 		}
 
 
@@ -37,6 +50,33 @@ public class MainMenu : MonoBehaviour {
 			title.SetActive(false);
 		}
 
+		if (wisconsinSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
+			mainMenu.SetActive(false);
+			mainMenuOrtho.SetActive(false);
+			deactivateAllButtons();
+			deactivateAllEnvironments();
+			wisconsin.SetActive(true);
+			theGame.SetActive(true);
+		}
+
+		if (texasSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
+			mainMenu.SetActive(false);
+			mainMenuOrtho.SetActive(false);
+			deactivateAllButtons();
+			deactivateAllEnvironments();
+			texas.SetActive(true);
+			theGame.SetActive(true);
+		}
+
 	}
-	
+
+	void deactivateAllButtons(){
+		wisconsinSelect.gameObject.SetActive(false);
+		texasSelect.gameObject.SetActive(false);
+	}
+
+	void deactivateAllEnvironments(){
+		wisconsin.SetActive (false);
+		texas.SetActive (false);
+	}
 }
