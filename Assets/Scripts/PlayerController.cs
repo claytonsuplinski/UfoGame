@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour {
 		if (explosionCounter == 0) {
 			ufoModel.SetActive (false);
 			ufoChunks.SetActive(true);
+			AudioSource.PlayClipAtPoint (gameOverSound, transform.position);
 		}
 		explosionCounter++;
 		if (explosionCounter > 100) {
@@ -94,9 +95,10 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if (exploding) {
+	  if (exploding) {
 			UfoExplode();
-				}
+			this.audio.volume = 0;
+	  }
 	  if (!gameOverSoundPlayed && !exploding) {
 			float moveHorizontal = 0;
 			if (Input.GetKey ("d")) {
@@ -122,8 +124,9 @@ public class PlayerController : MonoBehaviour {
 
 			ufo.transform.Rotate (ufo.transform.up, moveHorizontal);
 
-			this.audio.volume = (float)(rigidbody.velocity.magnitude / 90.0f) + 0.1f;
+			this.audio.volume = (float)(rigidbody.velocity.magnitude / 300.0f) + 0.1f;
 			this.audio.pitch = (float)(rigidbody.velocity.magnitude / 30.0f) + 1.0f;
+			
 
 			//Horizontal forces
 
@@ -211,7 +214,6 @@ public class PlayerController : MonoBehaviour {
 		transform.position = new Vector3 (0, 510, 0);
 		ufo.transform.rotation = Quaternion.identity;
 		if (!gameOverSoundPlayed) {
-			AudioSource.PlayClipAtPoint (gameOverSound, transform.position);
 			gameOverSoundPlayed = true;
 			gameOverText.SetActive(true);
 			ufoGame.SetActive(false);

@@ -16,6 +16,7 @@ public class ResetButton : MonoBehaviour {
 	void Update () {
 		if (resetButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
 			Application.LoadLevel ("MiniGame");
+			//AudioSource.PlayClipAtPoint(resetSound, Vector3.zero);
 		}
 	}
 }
