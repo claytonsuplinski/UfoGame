@@ -13,6 +13,8 @@ public class MainMenu : MonoBehaviour {
 	public GameObject missionsButton;
 	public GameObject storeButton;
 
+	public GUIText highScoreEnvironment;
+
 	public GUITexture wisconsinSelect;
 	public GUITexture texasSelect;
 	public GUITexture pennsylvaniaSelect;
@@ -22,15 +24,18 @@ public class MainMenu : MonoBehaviour {
 	public GameObject texas;
 	public GameObject pennsylvania;
 	public GameObject alaska;
+
+	private bool mainMenuOn = true;
+	private string selectedEnvironment = "";
 		
 	// Use this for initialization
 	void Start () {
 		
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		if (startButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
+		if (startButton.HitTest(Input.mousePosition) && Input.GetMouseButtonUp(0)) {
 			//mainMenu.SetActive(false);
 			title.SetActive(false);
 			startButton.gameObject.SetActive(false);
@@ -44,7 +49,7 @@ public class MainMenu : MonoBehaviour {
 		}
 
 
-		if (helpButton.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0)) {
+		if (helpButton.HitTest(Input.mousePosition) && Input.GetMouseButtonUp(0)) {
 			helpText.gameObject.SetActive(true);
 			startButton.gameObject.SetActive(false);
 			helpButton.gameObject.SetActive(false);
@@ -53,40 +58,47 @@ public class MainMenu : MonoBehaviour {
 			title.SetActive(false);
 		}
 
-		if (wisconsinSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-			mainMenu.SetActive(false);
-			mainMenuOrtho.SetActive(false);
-			deactivateAllButtons();
-			deactivateAllEnvironments();
-			wisconsin.SetActive(true);
-			theGame.SetActive(true);
-		}
+		if (!mainMenuOn) {
+				if (wisconsinSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
+						mainMenu.SetActive (false);
+						mainMenuOrtho.SetActive (false);
+						deactivateAllButtons ();
+						deactivateAllEnvironments ();
+						wisconsin.SetActive (true);
+						theGame.SetActive (true);
+						selectedEnvironment = "Wisconsin";
+				}
 
-		if (texasSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-			mainMenu.SetActive(false);
-			mainMenuOrtho.SetActive(false);
-			deactivateAllButtons();
-			deactivateAllEnvironments();
-			texas.SetActive(true);
-			theGame.SetActive(true);
-		}
+				if (texasSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
+						mainMenu.SetActive (false);
+						mainMenuOrtho.SetActive (false);
+						deactivateAllButtons ();
+						deactivateAllEnvironments ();
+						texas.SetActive (true);
+						theGame.SetActive (true);
+						selectedEnvironment = "Texas";
+				}
 
-		if (pennsylvaniaSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-			mainMenu.SetActive(false);
-			mainMenuOrtho.SetActive(false);
-			deactivateAllButtons();
-			deactivateAllEnvironments();
-			pennsylvania.SetActive(true);
-			theGame.SetActive(true);
-		}
-
-		if (alaskaSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-			mainMenu.SetActive(false);
-			mainMenuOrtho.SetActive(false);
-			deactivateAllButtons();
-			deactivateAllEnvironments();
-			alaska.SetActive(true);
-			theGame.SetActive(true);
+				if (pennsylvaniaSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
+						mainMenu.SetActive (false);
+						mainMenuOrtho.SetActive (false);
+						deactivateAllButtons ();
+						deactivateAllEnvironments ();
+						pennsylvania.SetActive (true);
+						theGame.SetActive (true);
+						selectedEnvironment = "Pennsylvania";
+				}
+					
+				if (alaskaSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
+						mainMenu.SetActive (false);
+						mainMenuOrtho.SetActive (false);
+						deactivateAllButtons ();
+						deactivateAllEnvironments ();
+						alaska.SetActive (true);
+						theGame.SetActive (true);
+						selectedEnvironment = "Alaska";
+				}
+			highScoreEnvironment.text = selectedEnvironment;
 		}
 
 	}
@@ -96,6 +108,7 @@ public class MainMenu : MonoBehaviour {
 		texasSelect.gameObject.SetActive(true);
 		pennsylvaniaSelect.gameObject.SetActive(true);
 		alaskaSelect.gameObject.SetActive(true);
+		mainMenuOn = false;
 	}
 
 	void deactivateAllButtons(){
@@ -111,4 +124,5 @@ public class MainMenu : MonoBehaviour {
 		pennsylvania.SetActive (false);
 		alaska.SetActive (false);
 	}
+	
 }

@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour {
 	public GameObject ufoLight;
 	public GameObject dummyCow;
 	public GameObject explosion;
+	public GUIText highScore;
+	public GUIText highScoreEnvironment;
+
 	private int count;
 	private int numPickups;
 	private List<GameObject> collectedCoins = new List<GameObject>();
@@ -29,9 +32,6 @@ public class PlayerController : MonoBehaviour {
 	private float ufoMaxHeight = 200;
 	private float timeLeft = 120;
 	private int numCows = 200;
-
-	private GameObject scienceFestDemo;
-	private GameObject holidayDemo;
 
 	private Vector3 startingPosition = new Vector3(0,50,0);
 
@@ -43,12 +43,10 @@ public class PlayerController : MonoBehaviour {
 		numPickups = GameObject.FindGameObjectsWithTag("Pickup").Length;
 
 		rigidbody.transform.position = startingPosition;
-		
-		scienceFestDemo = GameObject.Find("ScienceFestDemo");
-		holidayDemo = GameObject.Find("HolidayDemo");
 
+		highScore.text = PlayerPrefs.GetInt(highScoreEnvironment.text,0).ToString();
+		
 		genRandomCows ();
-		//holidayDemo.active = false;
 	}
 
 	void Update(){
@@ -237,6 +235,12 @@ public class PlayerController : MonoBehaviour {
 				Vector3 tmpPos = new Vector3(tmpOffset, 500, -10.0f*Mathf.Floor(i/20.0f) + 15.0f);
 				Instantiate(dummyCow, tmpPos, Quaternion.Euler(new Vector3(0,180,0)));
 				i++;
+			}
+
+			if( count > int.Parse(highScore.text) ){
+				PlayerPrefs.SetInt(highScoreEnvironment.text, count);
+				PlayerPrefs.Save();
+				highScore.text = count.ToString();
 			}
 		}
 	}
