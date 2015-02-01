@@ -99,10 +99,10 @@ public class PlayerController : MonoBehaviour {
 	  }
 	  if (!gameOverSoundPlayed && !exploding) {
 			float moveHorizontal = 0;
-			if (Input.GetKey ("d")) {
+			if (Input.GetKey (KeyCode.RightArrow)) {
 					moveHorizontal++;
 			}
-			if (Input.GetKey ("a")) {
+			if (Input.GetKey (KeyCode.LeftArrow)) {
 					moveHorizontal--;
 			}
 			if (Input.GetKey (KeyCode.Space)) {
@@ -116,8 +116,19 @@ public class PlayerController : MonoBehaviour {
 					forwardMag = -2;
 			}
 
+			float rightMag = 0;
+			if(Input.GetKey("a")){
+				rightMag = -2;
+			} else if(Input.GetKey("d")){
+				rightMag = 2;
+			}
+
 			Vector3 movement = new Vector3 (1, 0, 1);
 			movement = forwardMag * ufo.transform.forward;
+
+			Vector3 movementRight = new Vector3 (1, 0, 1);
+			movementRight = rightMag * ufo.transform.right;
+
 			transform.Rotate (transform.up, moveHorizontal);
 
 			ufo.transform.Rotate (ufo.transform.up, moveHorizontal);
@@ -129,6 +140,7 @@ public class PlayerController : MonoBehaviour {
 			//Horizontal forces
 
 			rigidbody.AddForce (movement * speed * Time.deltaTime, ForceMode.VelocityChange);
+			rigidbody.AddForce (movementRight * speed * Time.deltaTime, ForceMode.VelocityChange);
 
 //		rigidbody.velocity = ufo.transform.forward * Mathf.sqrt(rigidbody.velocity.x*rigidbody.velocity.x
 //		                                                   +rigidbody.velocity.z*rigidbody.velocity.z);

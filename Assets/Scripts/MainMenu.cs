@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MainMenu : MonoBehaviour {
 
@@ -12,25 +13,54 @@ public class MainMenu : MonoBehaviour {
 	public GameObject mainMenuOrtho;
 	public GameObject missionsButton;
 	public GameObject storeButton;
+	public GameObject gameSelectMenu;
+	public GUITexture leftArrow;
+	public GUITexture rightArrow;
 
 	public GUIText highScoreEnvironment;
 
 	public GUITexture wisconsinSelect;
+	public GUITexture iowaSelect;
 	public GUITexture texasSelect;
 	public GUITexture pennsylvaniaSelect;
 	public GUITexture alaskaSelect;
 
 	public GameObject wisconsin;
+	public GameObject iowa;
 	public GameObject texas;
 	public GameObject pennsylvania;
 	public GameObject alaska;
 
 	private bool mainMenuOn = true;
 	private string selectedEnvironment = "";
+
+	private Vector3 gameSelectLerpDest;
+	private bool gameSelectLerping = false;
+	private int currGameSelectFrame = 0;
+
+	private List<GUITexture> stateButtons = new List<GUITexture>();
+	private List<GameObject> stateEnvironments = new List<GameObject>();
+	private List<string> stateNames = new List<string>();
 		
 	// Use this for initialization
 	void Start () {
-		
+		stateButtons.Add (wisconsinSelect);	
+		stateButtons.Add (iowaSelect);
+		stateButtons.Add (texasSelect);
+		stateButtons.Add (pennsylvaniaSelect);
+		stateButtons.Add (alaskaSelect);
+
+		stateEnvironments.Add (wisconsin);
+		stateEnvironments.Add (iowa);
+		stateEnvironments.Add (texas);
+		stateEnvironments.Add (pennsylvania);
+		stateEnvironments.Add (alaska);
+
+		stateNames.Add ("Wisconsin");
+		stateNames.Add ("Iowa");
+		stateNames.Add ("Texas");
+		stateNames.Add ("Pennsylvania");
+		stateNames.Add ("Alaska");
 	}
 
 	// Update is called once per frame
@@ -40,6 +70,8 @@ public class MainMenu : MonoBehaviour {
 			title.SetActive(false);
 			startButton.gameObject.SetActive(false);
 			helpButton.gameObject.SetActive(false);
+			leftArrow.gameObject.SetActive(true);
+			rightArrow.gameObject.SetActive(true);
 			missionsButton.SetActive(false);
 			storeButton.SetActive(false);
 			activateAllButtons();
@@ -59,45 +91,41 @@ public class MainMenu : MonoBehaviour {
 		}
 
 		if (!mainMenuOn) {
-				if (wisconsinSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-						mainMenu.SetActive (false);
-						mainMenuOrtho.SetActive (false);
-						deactivateAllButtons ();
-						deactivateAllEnvironments ();
-						wisconsin.SetActive (true);
-						theGame.SetActive (true);
-						selectedEnvironment = "Wisconsin";
-				}
+			if(currGameSelectFrame < 1){leftArrow.gameObject.SetActive(false);}
+			else{leftArrow.gameObject.SetActive(true);}
 
-				if (texasSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-						mainMenu.SetActive (false);
-						mainMenuOrtho.SetActive (false);
-						deactivateAllButtons ();
-						deactivateAllEnvironments ();
-						texas.SetActive (true);
-						theGame.SetActive (true);
-						selectedEnvironment = "Texas";
-				}
+			if(currGameSelectFrame > 11){rightArrow.gameObject.SetActive(false);}
+			else{rightArrow.gameObject.SetActive(true);}
 
-				if (pennsylvaniaSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-						mainMenu.SetActive (false);
-						mainMenuOrtho.SetActive (false);
-						deactivateAllButtons ();
-						deactivateAllEnvironments ();
-						pennsylvania.SetActive (true);
-						theGame.SetActive (true);
-						selectedEnvironment = "Pennsylvania";
+			if (leftArrow.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0) && !gameSelectLerping && currGameSelectFrame > 0) {
+				gameSelectLerpDest = new Vector3(gameSelectMenu.transform.position.x+1, gameSelectMenu.transform.position.y, gameSelectMenu.transform.position.z);
+				gameSelectLerping = true;
+				currGameSelectFrame--;
+			}
+			if (rightArrow.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0) && !gameSelectLerping && currGameSelectFrame < 12) {
+				gameSelectLerpDest = new Vector3(gameSelectMenu.transform.position.x-1, gameSelectMenu.transform.position.y, gameSelectMenu.transform.position.z);
+				gameSelectLerping = true;
+				currGameSelectFrame++;
+			}
+
+			if(gameSelectLerping){
+				gameSelectMenu.transform.position = Vector3.Lerp(gameSelectMenu.transform.position, gameSelectLerpDest, 0.5f);
+				if(gameSelectMenu.transform.position == gameSelectLerpDest){
+					gameSelectLerping = false;
 				}
-					
-				if (alaskaSelect.HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
-						mainMenu.SetActive (false);
-						mainMenuOrtho.SetActive (false);
-						deactivateAllButtons ();
-						deactivateAllEnvironments ();
-						alaska.SetActive (true);
-						theGame.SetActive (true);
-						selectedEnvironment = "Alaska";
+			}
+
+			for(int i=0; i<stateNames.Count; i++){
+				if(stateButtons[i].HitTest (Input.mousePosition) && Input.GetMouseButtonDown (0)) {
+					deactivateMainMenu();
+					deactivateAllButtons ();
+					deactivateAllEnvironments ();
+					stateEnvironments[i].SetActive (true);
+					theGame.SetActive (true);
+					selectedEnvironment = stateNames[i];
 				}
+			}
+
 			highScoreEnvironment.text = selectedEnvironment;
 		}
 
@@ -105,6 +133,7 @@ public class MainMenu : MonoBehaviour {
 
 	void activateAllButtons(){
 		wisconsinSelect.gameObject.SetActive(true);
+		iowaSelect.gameObject.SetActive(true);
 		texasSelect.gameObject.SetActive(true);
 		pennsylvaniaSelect.gameObject.SetActive(true);
 		alaskaSelect.gameObject.SetActive(true);
@@ -113,6 +142,7 @@ public class MainMenu : MonoBehaviour {
 
 	void deactivateAllButtons(){
 		wisconsinSelect.gameObject.SetActive(false);
+		iowaSelect.gameObject.SetActive(false);
 		texasSelect.gameObject.SetActive(false);
 		pennsylvaniaSelect.gameObject.SetActive(false);
 		alaskaSelect.gameObject.SetActive(false);
@@ -120,9 +150,17 @@ public class MainMenu : MonoBehaviour {
 
 	void deactivateAllEnvironments(){
 		wisconsin.SetActive (false);
+		iowa.SetActive (false);
 		texas.SetActive (false);
 		pennsylvania.SetActive (false);
 		alaska.SetActive (false);
+	}
+
+	void deactivateMainMenu(){
+		mainMenu.SetActive (false);
+		mainMenuOrtho.SetActive (false);
+		leftArrow.gameObject.SetActive (false);
+		rightArrow.gameObject.SetActive (false);
 	}
 	
 }
