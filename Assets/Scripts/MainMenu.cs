@@ -21,12 +21,14 @@ public class MainMenu : MonoBehaviour {
 
 	public GUITexture wisconsinSelect;
 	public GUITexture iowaSelect;
+	public GUITexture northDakotaSelect;
 	public GUITexture texasSelect;
 	public GUITexture pennsylvaniaSelect;
 	public GUITexture alaskaSelect;
 
 	public GameObject wisconsin;
 	public GameObject iowa;
+	public GameObject northDakota;
 	public GameObject texas;
 	public GameObject pennsylvania;
 	public GameObject alaska;
@@ -46,18 +48,21 @@ public class MainMenu : MonoBehaviour {
 	void Start () {
 		stateButtons.Add (wisconsinSelect);	
 		stateButtons.Add (iowaSelect);
+		stateButtons.Add (northDakotaSelect);
 		stateButtons.Add (texasSelect);
 		stateButtons.Add (pennsylvaniaSelect);
 		stateButtons.Add (alaskaSelect);
 
 		stateEnvironments.Add (wisconsin);
 		stateEnvironments.Add (iowa);
+		stateEnvironments.Add (northDakota);
 		stateEnvironments.Add (texas);
 		stateEnvironments.Add (pennsylvania);
 		stateEnvironments.Add (alaska);
 
 		stateNames.Add ("Wisconsin");
 		stateNames.Add ("Iowa");
+		stateNames.Add ("North Dakota");
 		stateNames.Add ("Texas");
 		stateNames.Add ("Pennsylvania");
 		stateNames.Add ("Alaska");
@@ -132,28 +137,22 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	void activateAllButtons(){
-		wisconsinSelect.gameObject.SetActive(true);
-		iowaSelect.gameObject.SetActive(true);
-		texasSelect.gameObject.SetActive(true);
-		pennsylvaniaSelect.gameObject.SetActive(true);
-		alaskaSelect.gameObject.SetActive(true);
+		for (int i=0; i<stateButtons.Count; i++) {
+			stateButtons[i].gameObject.SetActive (true);
+		}
 		mainMenuOn = false;
 	}
 
 	void deactivateAllButtons(){
-		wisconsinSelect.gameObject.SetActive(false);
-		iowaSelect.gameObject.SetActive(false);
-		texasSelect.gameObject.SetActive(false);
-		pennsylvaniaSelect.gameObject.SetActive(false);
-		alaskaSelect.gameObject.SetActive(false);
+		for (int i=0; i<stateButtons.Count; i++) {
+			stateButtons[i].gameObject.SetActive (false);
+		}
 	}
 
 	void deactivateAllEnvironments(){
-		wisconsin.SetActive (false);
-		iowa.SetActive (false);
-		texas.SetActive (false);
-		pennsylvania.SetActive (false);
-		alaska.SetActive (false);
+		for (int i=0; i<stateEnvironments.Count; i++) {
+			stateEnvironments[i].SetActive (false);
+		}
 	}
 
 	void deactivateMainMenu(){
