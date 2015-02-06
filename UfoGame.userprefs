@@ -2,8 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MainMenu.cs">
     <Files>
-      <File FileName="Assets\Scripts\MainMenu.cs" Line="170" Column="2" />
-      <File FileName="Assets\Scripts\MainMenu.cs" Line="44" Column="2" />
+      <File FileName="Assets\Scripts\MainMenu.cs" Line="20" Column="38" />
       <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TractorBeam.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CameraController.cs" Line="1" Column="1" />

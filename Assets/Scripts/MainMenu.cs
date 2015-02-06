@@ -18,22 +18,36 @@ public class MainMenu : MonoBehaviour {
 	public GUITexture rightArrow;
 
 	public GUIText highScoreEnvironment;
+	
+	///////////////////////////////////
 
 	public GUITexture wisconsinSelect;
 	public GUITexture iowaSelect;
 	public GUITexture northDakotaSelect;
 	public GUITexture kansasSelect;
+	public GUITexture montanaSelect;
+	public GUITexture wyomingSelect;
+	public GUITexture southDakotaSelect;
+
 	public GUITexture texasSelect;
 	public GUITexture pennsylvaniaSelect;
 	public GUITexture alaskaSelect;
+	
+	///////////////////////////////////
 
 	public GameObject wisconsin;
 	public GameObject iowa;
 	public GameObject northDakota;
 	public GameObject kansas;
+	public GameObject montana;
+	public GameObject wyoming;
+	public GameObject southDakota;
+
 	public GameObject texas;
 	public GameObject pennsylvania;
 	public GameObject alaska;
+	
+	///////////////////////////////////
 
 	private bool mainMenuOn = true;
 	private string selectedEnvironment = "";
@@ -48,26 +62,45 @@ public class MainMenu : MonoBehaviour {
 		
 	// Use this for initialization
 	void Start () {
+
+		//////////////////////////////
+
 		stateButtons.Add (wisconsinSelect);	
 		stateButtons.Add (iowaSelect);
 		stateButtons.Add (northDakotaSelect);
 		stateButtons.Add (kansasSelect);
+		stateButtons.Add (montanaSelect);
+		stateButtons.Add (wyomingSelect);
+		stateButtons.Add (southDakotaSelect);
+
 		stateButtons.Add (texasSelect);
 		stateButtons.Add (pennsylvaniaSelect);
 		stateButtons.Add (alaskaSelect);
+
+		//////////////////////////////
 
 		stateEnvironments.Add (wisconsin);
 		stateEnvironments.Add (iowa);
 		stateEnvironments.Add (northDakota);
 		stateEnvironments.Add (kansas);
+		stateEnvironments.Add (montana);
+		stateEnvironments.Add (wyoming);
+		stateEnvironments.Add (southDakota);
+
 		stateEnvironments.Add (texas);
 		stateEnvironments.Add (pennsylvania);
 		stateEnvironments.Add (alaska);
+
+		////////////////////////////////
 
 		stateNames.Add ("Wisconsin");
 		stateNames.Add ("Iowa");
 		stateNames.Add ("North Dakota");
 		stateNames.Add ("Kansas");
+		stateNames.Add ("Montana");
+		stateNames.Add ("Wyoming");
+		stateNames.Add ("South Dakota");
+
 		stateNames.Add ("Texas");
 		stateNames.Add ("Pennsylvania");
 		stateNames.Add ("Alaska");
