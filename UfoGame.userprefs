@@ -1,9 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MainMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerController.cs">
     <Files>
-      <File FileName="Assets\Scripts\MainMenu.cs" Line="20" Column="38" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="260" Column="1" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="122" Column="30" />
+      <File FileName="Assets\Scripts\MainMenu.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\TractorBeam.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CameraController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PenguinScript.cs" Line="1" Column="1" />
