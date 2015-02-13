@@ -29,6 +29,7 @@ public class MainMenu : MonoBehaviour {
 	public GUITexture wyomingSelect;
 	public GUITexture southDakotaSelect;
 	public GUITexture arkansasSelect;
+	public GUITexture nebraskaSelect;
 
 	public GUITexture texasSelect;
 	public GUITexture pennsylvaniaSelect;
@@ -44,6 +45,7 @@ public class MainMenu : MonoBehaviour {
 	public GameObject wyoming;
 	public GameObject southDakota;
 	public GameObject arkansas;
+	public GameObject nebraska;
 
 	public GameObject texas;
 	public GameObject pennsylvania;
@@ -75,6 +77,7 @@ public class MainMenu : MonoBehaviour {
 		stateButtons.Add (wyomingSelect);
 		stateButtons.Add (southDakotaSelect);
 		stateButtons.Add (arkansasSelect);
+		stateButtons.Add (nebraskaSelect);
 
 		stateButtons.Add (texasSelect);
 		stateButtons.Add (pennsylvaniaSelect);
@@ -90,6 +93,7 @@ public class MainMenu : MonoBehaviour {
 		stateEnvironments.Add (wyoming);
 		stateEnvironments.Add (southDakota);
 		stateEnvironments.Add (arkansas);
+		stateEnvironments.Add (nebraska);
 
 		stateEnvironments.Add (texas);
 		stateEnvironments.Add (pennsylvania);
@@ -105,6 +109,7 @@ public class MainMenu : MonoBehaviour {
 		stateNames.Add ("Wyoming");
 		stateNames.Add ("South Dakota");
 		stateNames.Add ("Arkansas");
+		stateNames.Add ("Nebraska");
 
 		stateNames.Add ("Texas");
 		stateNames.Add ("Pennsylvania");
